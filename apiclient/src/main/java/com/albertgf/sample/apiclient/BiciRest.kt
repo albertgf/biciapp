@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 internal interface BiciRest {
 
 
-    @GET("/networks/bicing")
+    @GET("networks/bicing")
     fun getStations(): Call<StationsApiClient>
 
     companion object {
