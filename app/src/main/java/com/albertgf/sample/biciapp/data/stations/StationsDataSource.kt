@@ -12,5 +12,4 @@ interface StationsDataSource {
     fun isUpdated(): Boolean
     fun populate(stations: List<StationDomain>)
     fun contains(key: String): Boolean
-
 }
