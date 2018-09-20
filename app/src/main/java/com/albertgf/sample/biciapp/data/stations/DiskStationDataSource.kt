@@ -23,7 +23,15 @@ class DiskStationDataSource @Inject constructor(private val db: BiciDatabase) : 
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getAll(): Either<DomainError, List<StationMinimalDomain>> {
+    override fun getAll(): Either<DomainError, List<StationDomain>> {
+        val values = db.stationsDataDao().getStations()
+
+        return Either.right(values.mapIndexed { i, station ->
+            convetToDomain(station)
+        })
+    }
+
+    override fun getAllMinimal(): Either<DomainError, List<StationMinimalDomain>> {
 
         val values = db.stationsDataDao().getStationsMinimal()
 

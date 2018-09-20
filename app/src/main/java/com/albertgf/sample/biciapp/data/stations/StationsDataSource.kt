@@ -7,7 +7,8 @@ import org.funktionale.either.Either
 
 interface StationsDataSource {
     fun get(key: String): Either<DomainError, StationDomain>
-    fun getAll(): Either <DomainError, List<StationMinimalDomain>>
+    fun getAll(): Either <DomainError, List<StationDomain>>
+    fun getAllMinimal(): Either <DomainError, List<StationMinimalDomain>>
     fun isUpdated(): Boolean
     fun populate(stations: List<StationDomain>)
     fun contains(key: String): Boolean
