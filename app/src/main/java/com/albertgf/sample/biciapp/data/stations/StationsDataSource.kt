@@ -1,5 +1,8 @@
 package com.albertgf.sample.biciapp.data.stations
 
+import com.albertgf.sample.biciapp.domain.common.DomainError
+import com.albertgf.sample.biciapp.domain.stations.StationDomain
+import com.albertgf.sample.biciapp.domain.stations.StationMinimalDomain
 import org.funktionale.either.Either
 
 interface StationsDataSource {
