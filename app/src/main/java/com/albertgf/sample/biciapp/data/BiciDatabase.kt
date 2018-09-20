@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.albertgf.sample.biciapp.data.BiciDatabase.Companion.VERSION
+import com.albertgf.sample.biciapp.data.stations.StationsDao
 
 
 @Database(entities = [StationDisk::class], version = VERSION, exportSchema = false)

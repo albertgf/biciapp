@@ -18,3 +18,13 @@ data class StationDisk(
         @ColumnInfo(name = "zip") val zip: String,
         @ColumnInfo(name = "ebikes") val ebikes: Boolean
 )
+
+data class StationMinimal (
+        val id: String,
+        val emptySlots: Int,
+        val freeBikes: Int,
+        val longitude: Double,
+        val latitude: Double,
+        val status: String ,
+        val ebikes: Boolean
+)
