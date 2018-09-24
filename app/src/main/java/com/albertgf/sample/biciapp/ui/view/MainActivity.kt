@@ -2,6 +2,7 @@ package com.albertgf.sample.biciapp.ui.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.albertgf.sample.biciapp.BiciApp
 import com.albertgf.sample.biciapp.R
 import com.albertgf.sample.biciapp.domain.common.DomainError
@@ -39,22 +40,23 @@ class MainActivity : BaseActivity(), MainPresenter.View {
     }
 
     override fun hideLoadind() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("main","hide loading")
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("main","showloading")
     }
 
     override fun showDomainError(error: DomainError) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("main","show domain error")
     }
 
     override fun showEmptyCase() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("main","empty")
     }
 
     override fun showStations(list: List<StationMinimalDomain>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        Log.d("main","show stations")
     }
 }

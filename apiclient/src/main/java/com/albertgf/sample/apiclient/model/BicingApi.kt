@@ -42,7 +42,7 @@ data class ExtraApiClient (
     @SerializedName("address") val address: String,
     @SerializedName("districtCode")val districtCode: String,
     @SerializedName("status") val status: String ,
-    @SerializedName("uid") val uid: Integer,
+    @SerializedName("uid") val uid: Int,
     @SerializedName("zip") val zip: String,
     @SerializedName("ebikes") val ebikes: Boolean
 )
