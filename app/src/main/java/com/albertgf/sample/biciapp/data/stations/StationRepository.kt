@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class StationRepository @Inject constructor(private val dataSourceDisk: DiskStationDataSource, private val dataSourceApi: StationsDataSource) {
 
-    fun Update() {
+    fun update() {
         if (!dataSourceDisk.isUpdated()) {
             val values = dataSourceApi.getAll()
 
@@ -19,8 +19,13 @@ class StationRepository @Inject constructor(private val dataSourceDisk: DiskStat
     }
 
     fun getAll() : Either<DomainError, List<StationMinimalDomain>> {
-        Update()
+        update()
 
         return dataSourceDisk.getAllMinimal()
+    }
+
+    fun findByAddress(address: String) : Either<DomainError, List<StationMinimalDomain>> {
+        return  dataSourceDisk.getAllMinimal();
+        //return dataSourceDisk.getByAddress(address);
     }
 }
