@@ -6,7 +6,7 @@ import com.albertgf.sample.biciapp.domain.stations.StationMinimalDomain
 import org.funktionale.either.Either
 import javax.inject.Inject
 
-class StationRepository @Inject constructor(private val dataSourceDisk: DiskStationDataSource, private val dataSourceApi: StationsDataSource) {
+class StationRepository @Inject constructor(private val dataSourceDisk: DiskStationDataSource, private val dataSourceApi: ApiStationDataSource) {
 
     fun update() {
         if (!dataSourceDisk.isUpdated()) {

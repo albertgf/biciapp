@@ -2,9 +2,11 @@ package com.albertgf.sample.biciapp.di.module
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.albertgf.sample.apiclient.BiciApiClient
 import com.albertgf.sample.biciapp.BiciApp
 import com.albertgf.sample.biciapp.data.BiciDatabase
 import com.albertgf.sample.biciapp.data.BiciDatabase.Companion.DB_NAME
+import com.albertgf.sample.biciapp.data.stations.ApiStationDataSource
 import com.albertgf.sample.biciapp.data.stations.DiskStationDataSource
 import com.albertgf.sample.biciapp.data.stations.StationsDataSource
 import dagger.Module
@@ -27,7 +29,16 @@ class AppModule(val app: BiciApp) {
         return Room.databaseBuilder(app.applicationContext, BiciDatabase::class.java, DB_NAME).build()
     }
 
+    @Provides
+    @Singleton
+    fun provideBiciApiClient(): BiciApiClient {
+        return BiciApiClient()
+    }
+
     @Provides @Singleton
     fun diskStationDataSource(dataSource: DiskStationDataSource): StationsDataSource = dataSource
+
+    @Provides
+    fun apiStationDataSource(dataSource: ApiStationDataSource) : StationsDataSource = dataSource
 
 }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 
 
 
-data class StationsApiClient (
+data class StationsApi (
 
     @SerializedName("network") val network: NetworkApiClient
 )

@@ -12,7 +12,7 @@ import javax.inject.Inject
 class DiskStationDataSource @Inject constructor(private val db: BiciDatabase) : StationsDataSource {
     override fun isUpdated(): Boolean {
         // TODO ("not implemented")
-        return true
+        return false
     }
 
     override fun contains(key: String): Boolean {

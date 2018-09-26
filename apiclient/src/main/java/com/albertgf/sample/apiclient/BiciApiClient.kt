@@ -4,7 +4,7 @@ import com.albertgf.sample.apiclient.exception.ApiClientError
 import com.albertgf.sample.apiclient.exception.ItemNotFoundError
 import com.albertgf.sample.apiclient.exception.NetworkError
 import com.albertgf.sample.apiclient.exception.UnknownApiError
-import com.albertgf.sample.apiclient.model.StationsApiClient
+import com.albertgf.sample.apiclient.model.StationsApi
 import org.funktionale.either.Either
 import retrofit2.Call
 import retrofit2.Response
@@ -28,7 +28,7 @@ class BiciApiClient {
         else -> Either.right(response.body())
     }
 
-    fun getStations(): Either<ApiClientError, StationsApiClient?> = try {
+    fun getStations(): Either<ApiClientError, StationsApi?> = try {
         val response = biciClient.getStations().execute()
 
         inspectResponseForErrors(response)

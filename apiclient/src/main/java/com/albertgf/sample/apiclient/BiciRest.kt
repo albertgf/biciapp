@@ -1,6 +1,6 @@
 package com.albertgf.sample.apiclient
 
-import com.albertgf.sample.apiclient.model.StationsApiClient
+import com.albertgf.sample.apiclient.model.StationsApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,7 +14,7 @@ internal interface BiciRest {
 
 
     @GET("networks/bicing")
-    fun getStations(): Call<StationsApiClient>
+    fun getStations(): Call<StationsApi>
 
     companion object {
         fun create(debug: Boolean, url: String): BiciRest {

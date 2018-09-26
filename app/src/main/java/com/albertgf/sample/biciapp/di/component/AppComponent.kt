@@ -1,8 +1,10 @@
 package com.albertgf.sample.biciapp.di.component
 
 import android.content.Context
+import com.albertgf.sample.apiclient.BiciApiClient
 import com.albertgf.sample.biciapp.BiciApp
 import com.albertgf.sample.biciapp.data.BiciDatabase
+import com.albertgf.sample.biciapp.data.stations.ApiStationDataSource
 import com.albertgf.sample.biciapp.data.stations.DiskStationDataSource
 import com.albertgf.sample.biciapp.data.stations.StationsDataSource
 import com.albertgf.sample.biciapp.di.module.AppModule
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 
     fun context(): Context
     fun biciDataBase(): BiciDatabase
-    fun diskStationDataSource() : StationsDataSource
-    fun apiStationDataSource() : StationsDataSource
+    fun apiClient(): BiciApiClient
+    fun diskStationDataSource() : DiskStationDataSource
+    fun apiStationDataSource() : ApiStationDataSource
 }
