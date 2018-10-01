@@ -1,8 +1,13 @@
 package com.albertgf.sample.biciapp.ui.presenter
 
+import com.albertgf.sample.biciapp.common.optionalLeft
+import com.albertgf.sample.biciapp.common.optionalRight
 import com.albertgf.sample.biciapp.domain.common.DomainError
 import com.albertgf.sample.biciapp.domain.stations.GetStationsUseCase
 import com.albertgf.sample.biciapp.domain.stations.StationMinimalDomain
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -30,11 +35,13 @@ class MainPresenter @Inject constructor(private val getStationsUseCase: GetStati
     private fun getStations() {
         launch(UI) {
             try {
-                val result = async(CommonPool) { getStationsUseCase()}.await()
+                val result = async(CommonPool) {
+                    stationsToMarkers(getStationsUseCase())
+                }.await()
 
-                when (result) {
-                    is Either.Right -> showStations(result.r)
-                    is Either.Left -> view?.showDomainError(result.l)
+                when {
+                    result.isRight() -> showStations(result.right().get())
+                    else -> view?.showDomainError(result.left().get())
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -42,7 +49,18 @@ class MainPresenter @Inject constructor(private val getStationsUseCase: GetStati
         }
     }
 
-    private fun showStations(result: List<StationMinimalDomain>) {
+    private fun stationsToMarkers(result: Either<DomainError, List<StationMinimalDomain>>) : Either<DomainError, List<MarkerOptions>> {
+        return when {
+            result.isRight() -> Either.right(result.right().get().mapIndexed {
+                index, stationMinimalDomain ->
+                MarkerOptions().position(LatLng(stationMinimalDomain.latitude, stationMinimalDomain.longitude)).title(stationMinimalDomain.name)
+            })
+            else -> Either.left(result.left().get())
+        }
+
+    }
+
+    private fun showStations(result: List<MarkerOptions>) {
         when {
             result.isEmpty() -> view?.showEmptyCase()
             else -> view?.showStations(result)
@@ -54,6 +72,6 @@ class MainPresenter @Inject constructor(private val getStationsUseCase: GetStati
         fun showLoading()
         fun showDomainError(error: DomainError)
         fun showEmptyCase()
-        fun showStations(list: List<StationMinimalDomain>)
+        fun showStations(list: List<MarkerOptions>)
     }
 }

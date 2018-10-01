@@ -17,6 +17,7 @@ data class StationDomain (
 
 data class StationMinimalDomain (
         val id: String,
+        val name: String,
         val emptySlots: Int,
         val freeBikes: Int,
         val longitude: Double,

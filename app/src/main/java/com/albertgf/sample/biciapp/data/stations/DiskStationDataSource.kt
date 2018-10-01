@@ -51,5 +51,5 @@ class DiskStationDataSource @Inject constructor(private val db: BiciDatabase) : 
 
     private fun convetToDomain(disk: StationDisk) = StationDomain(disk.id, disk.emptySlots, disk.freeBikes, disk.longitude, disk.latitude, disk.name, disk.timestamp, disk.address, disk.districtCode, disk.status, disk.zip, disk.ebikes)
 
-    private fun convetToDomain(disk: StationMinimal) = StationMinimalDomain(disk.id, disk.emptySlots, disk.freeBikes, disk.longitude, disk.latitude,  disk.status, disk.ebikes)
+    private fun convetToDomain(disk: StationMinimal) = StationMinimalDomain(disk.id, disk.name, disk.emptySlots, disk.freeBikes, disk.longitude, disk.latitude,  disk.status, disk.ebikes)
 }

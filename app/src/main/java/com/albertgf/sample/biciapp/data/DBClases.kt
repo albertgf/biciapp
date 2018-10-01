@@ -21,6 +21,7 @@ data class StationDisk(
 
 data class StationMinimal (
         val id: String,
+        val name: String,
         @ColumnInfo(name = "empty_slots") val emptySlots: Int,
         @ColumnInfo(name = "free_bikes") val freeBikes: Int,
         val longitude: Double,

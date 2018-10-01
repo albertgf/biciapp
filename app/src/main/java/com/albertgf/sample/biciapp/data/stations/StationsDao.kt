@@ -35,6 +35,6 @@ abstract class StationsDao : BaseDao<StationDisk> {
     @Query ("SELECT * FROM stations")
     abstract fun getStations(): List<StationDisk>
 
-    @Query ("SELECT id, empty_slots, free_bikes, longitude, latitude, status, ebikes FROM stations")
+    @Query ("SELECT id, name, empty_slots, free_bikes, longitude, latitude, status, ebikes FROM stations")
     abstract fun getStationsMinimal(): List<StationMinimal>
 }

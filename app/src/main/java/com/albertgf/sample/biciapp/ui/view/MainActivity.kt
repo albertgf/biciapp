@@ -58,9 +58,9 @@ class MainActivity : BaseActivity(), MainPresenter.View, OnMapReadyCallback {
         map = googleMap ?: return
 
         // Add a marker in Sydney, Australia, and move the camera.
-        val sydney = LatLng(-34.0, 151.0)
-        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val barcelona = LatLng(41.390205, 2.154007)
+        map.addMarker(MarkerOptions().position(barcelona).title("Marker in barcelona"))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(barcelona, 12f))
     }
 
     override fun hideLoadind() {
@@ -79,8 +79,9 @@ class MainActivity : BaseActivity(), MainPresenter.View, OnMapReadyCallback {
         Log.d("main","empty")
     }
 
-    override fun showStations(list: List<StationMinimalDomain>) {
-
-        Log.d("main","show stations")
+    override fun showStations(list: List<MarkerOptions>) {
+        list.forEach {
+            map.addMarker(it)
+        }
     }
 }
