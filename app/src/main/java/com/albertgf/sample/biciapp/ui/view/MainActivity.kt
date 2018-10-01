@@ -8,17 +8,32 @@ import com.albertgf.sample.biciapp.R
 import com.albertgf.sample.biciapp.domain.common.DomainError
 import com.albertgf.sample.biciapp.domain.stations.StationMinimalDomain
 import com.albertgf.sample.biciapp.ui.presenter.MainPresenter
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import javax.inject.Inject
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.LatLng
 
-class MainActivity : BaseActivity(), MainPresenter.View {
+
+
+class MainActivity : BaseActivity(), MainPresenter.View, OnMapReadyCallback {
+
+
     override val layoutId: Int = R.layout.activity_main
 
     @Inject lateinit var presenter: MainPresenter
+
+    lateinit var map : GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         BiciApp.component.inject(this)
+
+        val mapFragment : SupportMapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     override fun onStart() {
@@ -37,6 +52,15 @@ class MainActivity : BaseActivity(), MainPresenter.View {
         super.onStop()
 
         presenter.deattachView()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = googleMap ?: return
+
+        // Add a marker in Sydney, Australia, and move the camera.
+        val sydney = LatLng(-34.0, 151.0)
+        map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     override fun hideLoadind() {
