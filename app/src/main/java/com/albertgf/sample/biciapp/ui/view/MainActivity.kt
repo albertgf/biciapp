@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.LatLng
 
 class MainActivity : BaseActivity(), MainPresenter.View, OnMapReadyCallback {
 
-
     override val layoutId: Int = R.layout.activity_main
 
     @Inject lateinit var presenter: MainPresenter
