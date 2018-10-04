@@ -6,6 +6,7 @@ import android.util.Log
 import com.albertgf.sample.biciapp.BiciApp
 import com.albertgf.sample.biciapp.R
 import com.albertgf.sample.biciapp.domain.common.DomainError
+import com.albertgf.sample.biciapp.domain.location.Location
 import com.albertgf.sample.biciapp.domain.stations.StationMinimalDomain
 import com.albertgf.sample.biciapp.ui.presenter.MainPresenter
 import com.google.android.gms.maps.GoogleMap
@@ -59,7 +60,7 @@ class MainActivity : BaseActivity(), MainPresenter.View, OnMapReadyCallback {
         // Add a marker in Sydney, Australia, and move the camera.
         val barcelona = LatLng(41.390205, 2.154007)
         map.addMarker(MarkerOptions().position(barcelona).title("Marker in barcelona"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(barcelona, 12f))
+        //
     }
 
     override fun hideLoadind() {
@@ -83,4 +84,11 @@ class MainActivity : BaseActivity(), MainPresenter.View, OnMapReadyCallback {
             map.addMarker(it)
         }
     }
+
+    override fun setLocation(location: Location) {
+        Log.i("activity","location")
+        val barcelona = LatLng(location.latitude, location.longitude)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(barcelona, 12f))
+    }
+
 }

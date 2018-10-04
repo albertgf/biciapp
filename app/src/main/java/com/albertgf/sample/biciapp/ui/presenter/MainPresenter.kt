@@ -16,15 +16,21 @@ import org.funktionale.either.Either
 import java.lang.Exception
 import javax.inject.Inject
 import android.graphics.Paint.ANTI_ALIAS_FLAG
+import android.util.Log
 import com.albertgf.sample.biciapp.R
 import com.albertgf.sample.biciapp.domain.common.UnknownDomainError
+import com.albertgf.sample.biciapp.domain.location.GetLocationUseCase
+import com.albertgf.sample.biciapp.domain.location.Location
+import kotlinx.coroutines.experimental.channels.*
+import kotlinx.coroutines.experimental.withContext
 
 
-class MainPresenter @Inject constructor(private val getStationsUseCase: GetStationsUseCase) {
+class MainPresenter @Inject constructor(private val getStationsUseCase: GetStationsUseCase, private val getLocationUseCase: GetLocationUseCase) {
 
     private var view: View? = null
 
     fun update() {
+        getLocation()
         getStations()
     }
 
@@ -36,12 +42,41 @@ class MainPresenter @Inject constructor(private val getStationsUseCase: GetStati
         view = null
     }
 
+    private fun getLocation() {
+        val channel: SendChannel<Location> = actor(UI) {
+            for (location in channel) {
+                Log.i("presenterLocation","coroutine")
+                view?.setLocation(location)
+            }
+        }
+
+        launch(CommonPool) {
+            getLocationUseCase(channel)
+        }
+
+        /*launch(UI) {
+            try {
+                val publisher: ReceiveChannel<Location> = getLocationUseCase()
+
+                publisher.consumeEach {
+
+                    Log.i("presenter","location")
+                    view?.setLocation(it)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }*/
+    }
+
     private fun getStations() {
         launch(UI) {
             try {
-                val result = async(CommonPool) {
+                val result = withContext(CommonPool) {
+                    Log.i("stationsApi","coroutine")
                     stationsToMarkers(getStationsUseCase())
-                }.await()
+                }
 
                 when {
                     result.isRight() -> showStations(result.right().get())
@@ -54,8 +89,7 @@ class MainPresenter @Inject constructor(private val getStationsUseCase: GetStati
     }
 
     private fun stationsToMarkers(result: Either<DomainError, List<StationMinimalDomain>>) : Either<DomainError, List<MarkerOptions>> {
-
-
+        Log.i("stationsMarkers","coroutine")
         val resources : Resources = view?.getResources() ?: return Either.left(UnknownDomainError())
 
         return when {
@@ -106,6 +140,7 @@ class MainPresenter @Inject constructor(private val getStationsUseCase: GetStati
         fun showDomainError(error: DomainError)
         fun showEmptyCase()
         fun showStations(list: List<MarkerOptions>)
+        fun setLocation(location: Location)
 
         fun getResources() : Resources
     }
